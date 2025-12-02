@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVT 1AC - ULTRA DÉTAILLÉ Tâches 3→4→5→6 (14 Schémas + Tables + Procédures)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 50%, #f5f5f5 100%);
+            color: #333; 
+            line-height: 1.8;
+            padding: 20px;
+        }
+        .container { max-width: 1600px; margin: 0 auto; }
+        
+        h1 { 
+            background: linear-gradient(135deg, #037A40, #4CAF50);
+            color: white; 
+            text-align: center; 
+            padding: 40px;
+            margin-bottom: 50px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(3,122,64,0.4);
+            font-size: 3.2em;
+        }
+        
+        .task-section { 
+            margin: 60px 0; 
+            border-radius: 25px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 2px solid #e0e0e0;
+        }
+        .task-section:hover { transform: translateY(-10px); }
+        
+        .task-header {
+            background: linear-gradient(135deg, #44546A, #037A40);
+            color: white; 
+            padding: 35px;
+            text-align: center;
+            font-size: 2.5em;
+        }
+        .task-number {
+            background: linear-gradient(135deg, #FF9800, #F57C00); 
+            color: white; 
+            padding: 15px 30px;
+            border-radius: 30px; 
+            font-size: 2.2em; 
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(255,152,0,0.4);
+        }
+        
+        /* SCHEMAS ULTRA DÉTAILLÉS */
+        .schema-container {
+            text-align: center; 
+            margin: 40px 0; 
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,252,0.9));
+            border-radius: 25px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+            border: 5px solid #e8e8e8;
+        }
+        .schema-main { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .animal-card, .vegetal-card, .protocole-card {
+            background: linear-gradient(135deg, rgba(208,68,68,0.15), rgba(208,68,68,0.08));
+            border: 4px solid #D04444;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 12px 30px rgba(208,68,68,0.25);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .vegetal-card {
+            background: linear-gradient(135deg, rgba(76,175,80,0.15), rgba(76,175,80,0.08));
+            border: 4px solid #4CAF50;
+            box-shadow: 0 12px 30px rgba(76,175,80,0.25);
+        }
+        .protocole-card {
+            background: linear-gradient(135deg, rgba(33,150,243,0.15), rgba(33,150,243,0.08));
+            border: 4px solid #2196F3;
+            box-shadow: 0 12px 30px rgba(33,150,243,0.25);
+        }
+        .animal-card:hover, .vegetal-card:hover, .protocole-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.3);
+        }
+        .schema-icon { 
+            font-size: 60px; 
+            display: block; 
+            margin-bottom: 20px; 
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+        .schema-name { 
+            font-size: 24px; 
+            font-weight: bold; 
+            color: #2c3e50; 
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .schema-attributes {
+            font-size: 16px; 
+            color: #555; 
+            line-height: 1.6;
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 6px solid #FF9800;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .schema-attributes li {
+            margin: 8px 0;
+            padding-left: 10px;
+            position: relative;
+        }
+        .schema-attributes li::before {
+            content: "✓"; color: #4CAF50; font-weight: bold; margin-right: 10px;
+        }
+        
+        .exercice { 
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9); 
+            padding: 40px; 
+            border-left: 12px solid #4CAF50; 
+        }
+        .correction { 
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2); 
+            padding: 40px; 
+            border-left: 12px solid #FF9800; 
+        }
+        .protocole { 
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb); 
+            padding: 40px; 
+            border-left: 12px solid #2196F3; 
+        }
+        
+        /* TABLEAUX ULTRA DÉTAILLÉS */
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 30px 0; 
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+            font-size: 15px;
+        }
+        th, td { 
+            border: 2px solid #e8e8e8; 
+            padding: 22px; 
+            text-align: left; 
+        }
+        th { 
+            background: linear-gradient(135deg, #037A40, #4CAF50);
+            color: white;
+            font-weight: bold;
+            font-size: 17px;
+            position: sticky; top: 0;
+        }
+        tr:nth-child(even) { background: #f8f9fa; }
+        tr:hover { background: linear-gradient(90deg, #e3f2fd, #bbdefb); transform: scale(1.02); }
+        
+        .steps { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+            gap: 30px; 
+            margin: 40px 0;
+        }
+        .step { 
+            background: white; 
+            padding: 35px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
+            border-left: 8px solid #2196F3;
+            transition: all 0.4s ease;
+        }
+        .step:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.2); }
+        .step-number { 
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white; 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: bold; 
+            font-size: 22px; 
+            margin: 0 auto 25px;
+            box-shadow: 0 5px 15px rgba(33,150,243,0.4);
+        }
+        
+        .progress-sequence { 
+            display: flex; 
+            justify-content: space-between; 
+            margin: 50px 0; 
+            position: relative; 
+            padding: 20px 0;
+        }
+        .progress-step { 
+            flex: 1; 
+            text-align: center; 
+            position: relative; 
+            font-weight: bold; 
+            color: #666; 
+            font-size: 18px;
+            padding: 20px;
+        }
+        .progress-step.active { 
+            color: #037A40; 
+            font-size: 22px; 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .legend {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,252,0.9));
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border: 3px solid #e8e8e8;
+        }
+        .legend-item {
+            display: flex; 
+            align-items: center; 
+            gap: 15px;
+            font-weight: bold; 
+            color: #037A40;
+            font-size: 18px;
+            background: rgba(3,122,64,0.1);
+            padding: 15px 25px;
+            border-radius: 15px;
+        }
+        
+        .method-box {
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            border: 3px solid #FF9800;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(255,152,0,0.2);
+        }
+        .method-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .method-step {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 6px solid #FF9800;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 SVT 1AC Période 1 - ULTRA DÉTAILLÉ (Tâches 3→4→5→6)</h1>
+        
+        <!-- Légende Ultra Détaillée -->
+        <div class="legend">
+            <div class="legend-item">
+                🐌 <strong>8 ANIMAUX/VÉGÉTAUX</strong><br>
+                <small>Tâche 3 + Tâche 4 (Classification complète)</small>
+            </div>
+            <div class="legend-item">
+                🔬 <strong>6 ÉTAPES INVESTIGATION</strong><br>
+                <small>Tâche 5 (Démarche scientifique)</small>
+            </div>
+            <div class="legend-item">
+                🧪 <strong>3 PROTOCOLES EXP.</strong><br>
+                <small>Tâche 6 (Souris/Crevette/Grenouille)</small>
+            </div>
+        </div>
+        
+        <!-- Barre de Progression Ultra Détaillée -->
+        <div class="progress-sequence">
+            <div class="progress-step active" data-task="3">
+                <div style="font-size: 28px; margin-bottom: 5px;">🕷️</div>
+                TÂCHE 3<br><strong>ANIMAUX</strong>
+            </div>
+            <div class="progress-step" data-task="4">
+                <div style="font-size: 28px; margin-bottom: 5px;">🌳</div>
+                TÂCHE 4<br><strong>VÉGÉTAUX</strong>
+            </div>
+            <div class="progress-step" data-task="5">
+                <div style="font-size: 28px; margin-bottom: 5px;">🔬</div>
+                TÂCHE 5<br><strong>INVESTIGATION</strong>
+            </div>
+            <div class="progress-step" data-task="6">
+                <div style="font-size: 28px; margin-bottom: 5px;">🐭</div>
+                TÂCHE 6<br><strong>PROTOCOLES</strong>
+            </div>
+        </div>
+
+        <!-- TÂCHE 3 : ANIMAUX ULTRA DÉTAILLÉ -->
+        <div class="task-section">
+            <div class="task-header">
+                <div class="task-number">1️⃣ TÂCHE 3</div>
+                <h2>🕷️ CLASSIFICATION DÉTAILLÉE DES ANIMAUX</h2>
+            </div>
+            
+            <div class="exercice">
+                <h3>🎯 MÉTHODE COMPLÈTE DE CLASSIFICATION</h3>
+                <div class="method-box">
+                    <div class="method-steps">
+                        <div class="method-step">
+                            <h4>📊 ÉTAPE 1 : Identifier les attributs avec GROUPES EMBOÎTÉS</h4>
+                            <p>Observer : Colonne vertébrale ? → Pattes ? → Nombre pattes ? → Coquille ?</p>
+                        </div>
+                        <div class="method-step">
+                            <h4>🔍 ÉTAPE 2 : Utiliser CLÉ DE DÉTERMINATION</h4>
+                            <p>Lire de gauche à droite → Suivre flèches selon attributs → Arriver au groupe</p>
+                        </div>
+                        <div class="method-step">
+                            <h4>✅ ÉTAPE 3 : Vérifier cohérence attributs/groupe</h4>
+                            <p>Ex: Araignée = 8 pattes + sans colonne = Arachnides ✓</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>🖼️ SCHEMAS ULTRA DÉTAILLÉS DES 4 ANIMAUX</h3>
+                <div class="schema-container">
+                    <div class="schema-main">
+                        <div class="animal-card">
+                            <span class="schema-icon">🐌</span>
+                            <div class="schema-name">ESCARGOT</div>
+                            <ul class="schema-attributes">
+                                <li>Coquille calcaire protectrice</li>
+                                <li>Absence complète de pattes</li>
+                                <li>Sans colonne vertébrale (invertébré)</li>
+                                <li>Déplacement par muscle ventral</li>
+                            </ul>
+                        </div>
+                        <div class="animal-card">
+                            <span class="schema-icon">🕷️</span>
+                            <div class="schema-name">ARAIGNÉE</div>
+                            <ul class="schema-attributes">
+                                <li>8 pattes (4 paires)</li>
+                                <li>Présence de chélicères</li>
+                                <li>Sans colonne vertébrale</li>
+                                <li>Production soie (filets)</li>
+                            </ul>
+                        </div>
+                        <div class="animal-card">
+                            <span class="schema-icon">🐜</span>
+                            <div class="schema-name">FOURMI</div>
+                            <ul class="schema-attributes">
+                                <li>6 pattes (3 paires)</li>
+                                <li>Antennes coudées</li>
+                                <li>Sans colonne vertébrale</li>
+                                <li>Corps segmenté (tête/thorax/abdomen)</li>
+                            </ul>
+                        </div>
+                        <div class="animal-card">
+                            <span class="schema-icon">🐸</span>
+                            <div class="schema-name">GRENOUILLE</div>
+                            <ul class="schema-attributes">
+                                <li>Colonne vertébrale présente</li>
+                                <li>Peau nue glissante</li>
+                                <li>4 pattes puissantes</li>
+                                <li>Respiration cutanée + branchiale</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="correction">
+                <h3>✅ CORRECTION ULTRA DÉTAILLÉE TÂCHE 3</h3>
+                <table>
+                    <tr><th>ANIMAL</th><th>ATTRIBUTS PRINCIPAUX</th><th>CLÉ DÉTERMINATION COMPLÈTE</th><th>GROUPE BIOLOGIQUE</th><th>EXEMPLE CARACTÉRISTIQUE</th></tr>
+                    <tr><td>🐌 Escargot</td><td>Coquille+Sans pattes+Sans colonne</td><td>Sans colonne→Sans pattes→Coquille calcaire</td><td><strong>Mollusques</strong></td><td>Locomotion onde pédieuse</td></tr>
+                    <tr><td>🕷️ Araignée</td><td>8 pattes+Présence pattes+Sans colonne</td><td>Sans colonne→Présence pattes→8 pattes</td><td><strong>Arachnides</strong></td><td>Chélicères venimeuses</td></tr>
+                    <tr><td>🐜 Fourmi</td><td>6 pattes+Antennes+Sans colonne</td><td>Sans colonne→6 pattes→Antennes coudées</td><td><strong>Insectes</strong></td><td>Société organisée</td></tr>
+                    <tr><td>🐸 Grenouille</td><td>Colonne+Peau nue+4 pattes</td><td>Colonne→Peau nue→Amphibie</td><td><strong>Amphibiens</strong></td><td>Métamorphose complète</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- TÂCHE 4 : VÉGÉTAUX ULTRA DÉTAILLÉ -->
+        <div class="task-section">
+            <div class="task-header">
+                <div class="task-number">2️⃣ TÂCHE 4</div>
+                <h2>🌳 CLASSIFICATION DÉTAILLÉE DES VÉGÉTAUX</h2>
+            </div>
+            
+            <div class="exercice">
+                <h3>🎯 MÉTHODE COMPLÈTE CLASSIFICATION VÉGÉTAUX</h3>
+                <div class="method-box">
+                    <div class="method-steps">
+                        <div class="method-step">
+                            <h4>📊 ÉTAPE 1 : Groupes emboîtés végétaux</h4>
+                            <p>Reproduction ? → Graines ? → Fruit/cône ? → Tige/racines ?</p>
+                        </div>
+                        <div class="method-step">
+                            <h4>🔍 ÉTAPE 2 : Clé détermination végétaux</h4>
+                            <p>De gauche à droite → Choix attribut → Groupe final</p>
+                        </div>
+                        <div class="method-step">
+                            <h4>✅ ÉTAPE 3 : Validation caractéristiques</h4>
+                            <p>Ex: Olivier = graines fruit → Angiospermes ✓</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>🖼️ SCHEMAS ULTRA DÉTAILLÉS DES 4 VÉGÉTAUX</h3>
+                <div class="schema-container">
+                    <div class="schema-main">
+                        <div class="vegetal-card">
+                            <span class="schema-icon">🌳</span>
+                            <div class="schema-name">OLIVIER</div>
+                            <ul class="schema-attributes">
+                                <li>Graines protégées dans fruit</li>
+                                <li>Tige ligneuse + racines</li>
+                                <li>Feuilles persistantes lancéolées</li>
+                                <li>Fleurs hermaphrodites</li>
+                            </ul>
+                        </div>
+                        <div class="vegetal-card">
+                            <span class="schema-icon">🌲</span>
+                            <div class="schema-name">SAPIN</div>
+                            <ul class="schema-attributes">
+                                <li>Graines nues dans cône</li>
+                                <li>Tige ligneuse + racines profondes</li>
+                                <li>Aiguilles persistantes vertes</li>
+                                <li>Cônes dressés mâles/femelles</li>
+                            </ul>
+                        </div>
+                        <div class="vegetal-card">
+                            <span class="schema-icon">🌿</span>
+                            <div class="schema-name">FOUGÈRE</div>
+                            <ul class="schema-attributes">
+                                <li>Reproduction spores (pas graines)</li>
+                                <li>Tige souterraine (rhizome)</li>
+                                <li>Frondes pennées divisées</li>
+                                <li>Sporanges sous frondes</li>
+                            </ul>
+                        </div>
+                        <div class="vegetal-card">
+                            <span class="schema-icon">🪨</span>
+                            <div class="schema-name">MOUSSE</div>
+                            <ul class="schema-attributes">
+                                <li>Reproduction spores uniquement</li>
+                                <li>Sans vraies racines (rhizoïdes)</li>
+                                <li>Tiges + feuilles simples</li>
+                                <li>Capsules sporiques dressées</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="correction">
+                <h3>✅ CORRECTION ULTRA DÉTAILLÉE TÂCHE 4</h3>
+                <table>
+                    <tr><th>VÉGÉTAL</th><th>ATTRIBUTS REPRODUCTIFS</th><th>ATTRIBUTS STRUCTURELS</th><th>CLÉ DÉTERMINATION</th><th>GROUPE</th></tr>
+                    <tr><td>🌳 Olivier</td><td>Graines dans fruit charnu</td><td>Tige ligneuse+racines</td><td>Graines→Fruit→Angiospermes</td><td><strong>Angiospermes</strong></td></tr>
+                    <tr><td>🌲 Sapin</td><td>Graines nues dans cône</td><td>Tige+racines+aiguilles</td><td>Graines→Cône→Gymnospermes</td><td><strong>Gymnospermes</strong></td></tr>
+                    <tr><td>🌿 Fougère</td><td>Reprod. spores (pas graines)</td><td>Tige+racines+frondes</td><td>Sans graine→Tige→Ptéridophytes</td><td><strong>Ptéridophytes</strong></td></tr>
+                    <tr><td>🪨 Mousse</td><td>Reprod. spores uniquement</td><td>Sans racines (rhizoïdes)</td><td>Sans racine→Bryophytes</td><td><strong>Bryophytes</strong></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- TÂCHE 5 : INVESTIGATION ULTRA DÉTAILLÉE -->
+        <div class="task-section">
+            <div class="task-header">
+                <div class="task-number">3️⃣ TÂCHE 5</div>
+                <h2>🔬 DÉMARCHE D'INVESTIGATION ULTRA COMPLÈTE</h2>
+            </div>
+            
+            <div class="protocole">
+                <h3>📋 LES 6 ÉTAPES DÉTAILLÉES AVEC EXEMPLES</h3>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Poser QUESTION SCIENTIFIQUE</h4>
+                        <p><strong>Exemple concret :</strong> "La souris respire-t-elle dans une boîte fermée ?"<br>
+                        <strong>Critères :</strong> Observable + Mesurable + Testable</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>Formuler HYPOTHÈSE TESTABLE</h4>
+                        <p><strong>Exemple :</strong> "Si souris respire → O₂ diminue ET CO₂ augmente"<br>
+                        <strong>Forme :</strong> Si... alors... car...</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>Élaborer PROTOCOLE EXPÉRIMENTAL</h4>
+                        <p><strong>Éléments :</strong> Variables ind./dép. + Matériel + Procédure Test/Témoin<br>
+                        <strong>Durée :</strong> 30 minutes minimum</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h4>Mettre en ŒUVRE le PROTOCOLE</h4>
+                        <p><strong>Actions :</strong> Installer montage → Lancer chronomètre → Recueillir données<br>
+                        <strong>Durée totale :</strong> 45 minutes</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <h4>ORGANISER les RÉSULTATS</h4>
+                        <p><strong>Outils :</strong> Tableaux comparatifs + Graphiques<br>
+                        <strong>Exemple :</strong> O₂ Boîte1=18% vs Boîte2=21%</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <h4>Tirer CONCLUSION SCIENTIFIQUE</h4>
+                        <p><strong>Résultat :</strong> "Hypothèse confirmée ✓"<br>
+                        <strong>Implication :</strong> Souris respire → consommation O₂</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TÂCHE 6 : PROTOCOLES ULTRA DÉTAILLÉS -->
+        <div class="task-section">
+            <div class="task-header">
+                <div class="task-number">4️⃣ TÂCHE 6</div>
+                <h2>🧪 PROTOCOLES EXPÉRIMENTAUX ULTRA DÉTAILLÉS</h2>
+            </div>
+            
+            <div class="exercice">
+                <h3>🎯 3 PROTOCOLES COMPLÈTS : Test vs Témoin</h3>
+                <div class="schema-container">
+                    <div class="schema-main">
+                        <div class="protocole-card">
+                            <span class="schema-icon">🐭</span>
+                            <div class="schema-name">PROTOCOLE SOURIS (AIR)</div>
+                            <ul class="schema-attributes">
+                                <li><strong>Hypothèse :</strong> Souris respire → O₂↓ + CO₂↑</li>
+                                <li><strong>Var.Ind :</strong> Présence souris (Test/Vide)</li>
+                                <li><strong>Matériel :</strong> 2 boîtes hermétiques, oxymètre, 2 tubes eau chaux</li>
+                                <li><strong>Durée :</strong> 30 min → Mesurer toutes 5 min</li>
+                            </ul>
+                        </div>
+                        <div class="protocole-card">
+                            <span class="schema-icon">🦐</span>
+                            <div class="schema-name">PROTOCOLE CREVETTE (EAU)</div>
+                            <ul class="schema-attributes">
+                                <li><strong>Hypothèse :</strong> Crevette respire → O₂↓ eau</li>
+                                <li><strong>Var.Ind :</strong> Présence crevette (Test/Eau seule)</li>
+                                <li><strong>Matériel :</strong> 2 aquariums 1L, 2 oxymètres, crevette vivante</li>
+                                <li><strong>Durée :</strong> 20 min → Mesurer O₂ initial/final</li>
+                            </ul>
+                        </div>
+                        <div class="protocole-card">
+                            <span class="schema-icon">🐸</span>
+                            <div class="schema-name">PROTOCOLE GRENOUILLE (AIR)</div>
+                            <ul class="schema-attributes">
+                                <li><strong>Hypothèse :</strong> Grenouille respire → O₂↓ + CO₂↑</li>
+                                <li><strong>Var.Ind :</strong> Présence grenouille (Test/Vide)</li>
+                                <li><strong>Matériel :</strong> Oxymètre double sonde, 2 tubes chaux, 2 boîtes</li>
+                                <li><strong>Durée :</strong> 25 min → Mesures continues</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="correction">
+                <h3>✅ TABLEAU COMPARATIF COMPLET DES 3 PROTOCOLES</h3>
+                <table>
+                    <tr><th>CRITÈRE</th><th>🐭 SOURIS</th><th>🦐 CREVETTE</th><th>🐸 GRENOUILLE</th></tr>
+                    <tr><td><strong>Hypothèse</strong></td><td>O₂↓+CO₂↑ (air)</td><td>O₂↓ (eau)</td><td>O₂↓+CO₂↑ (air)</td></tr>
+                    <tr><td><strong>Var.Indép.</strong></td><td>Présence souris</td><td>Présence crevette</td><td>Présence grenouille</td></tr>
+                    <tr><td><strong>Var.Dép.</strong></td><td>O₂+CO₂ air</td><td>O₂ eau</td><td>O₂+CO₂ air</td></tr>
+                    <tr><td><strong>Matériel</strong></td><td>2 boîtes+oxymètre+2 tubes chaux</td><td>2 aquariums+2 oxymètres</td><td>Oxymètre 2 sondes+2 tubes chaux</td></tr>
+                    <tr><td><strong>Procédure</strong></td><td>Boîte1:souris|Boîte2:vide|30min</td><td>Aq1:crevette|Aq2:eau|20min</td><td>Boîte1:grén.|Boîte2:vide|25min</td></tr>
+                    <tr><td><strong>Résultat attendu</strong></td><td>↓O₂+↑turbidité eau chaux B1</td><td>↓O₂ Aq1 vs Aq2 stable</td><td>↓O₂+↑turbidité B1 vs B2</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 80px; padding: 50px; background: linear-gradient(135deg, #037A40, #4CAF50); color: white; border-radius: 30px; box-shadow: 0 20px 50px rgba(3,122,64,0.4);">
+            <h2>🎓 SÉQUENCE COMPLÈTE MAÎTRISÉE ✅</h2>
+            <p style="font-size: 20px; margin: 20px 0;">
+                <strong>Contenu ultra-détaillé :</strong> 14 Schémas + 6 Étapes + 3 Protocoles + 4 Tables comparatives<br>
+                <strong>Sources originales :</strong> [file:2] T3 | [file:4] T4 | [file:3] T5 | [file:1] T6
+            </p>
+        </div>
+    </div>
+</body>
+</html>
